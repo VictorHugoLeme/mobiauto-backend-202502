@@ -30,34 +30,32 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UsuarioDto save(UsuarioDto usuarioDto) {
+    public Usuario save(UsuarioDto usuarioDto) {
         Usuario newUsuario = usuarioMapper.from(usuarioDto);
         newUsuario.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
-        return usuarioMapper.from(usuarioRepository.save(newUsuario));
+        return usuarioRepository.save(newUsuario);
     }
 
     @Override
-    public Page<UsuarioDto> getAll(UsuarioFilter filter) {
+    public Page<Usuario> getAll(UsuarioFilter filter) {
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
-        return usuarioRepository.findAll(usuarioSpecifications.getSpecification(filter), pageable).map(usuarioMapper::from);
+        return usuarioRepository.findAll(usuarioSpecifications.getSpecification(filter), pageable);
     }
 
     @Override
-    public UsuarioDto findById(Long id) {
-        return usuarioMapper.from(
-            usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(format("Usuario with id {0} not found", id)))
-        );
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(format("Usuario with id {0} not found", id)));
     }
 
     @Override
-    public UsuarioDto update(UsuarioDto usuarioDto) {
+    public Usuario update(UsuarioDto usuarioDto) {
         Usuario existing = usuarioRepository.findById(usuarioDto.getId())
             .orElseThrow(() -> new RuntimeException(format("Usuario with id {0} not found", usuarioDto.getId())));
 
         BeanUtils.copyProperties(usuarioDto, existing);
         existing.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
-        return usuarioMapper.from(usuarioRepository.save(existing));
+        return usuarioRepository.save(existing);
     }
 
     @Override

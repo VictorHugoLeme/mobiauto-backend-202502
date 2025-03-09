@@ -1,4 +1,4 @@
-package dev.victorhleme.mobiauto.dtos;
+package dev.victorhleme.mobiauto.dtos.oportunidade;
 
 import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.entities.Usuario;

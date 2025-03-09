@@ -2,6 +2,7 @@ package dev.victorhleme.mobiauto.controllers;
 
 import dev.victorhleme.mobiauto.dtos.RevendaDto;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
+import dev.victorhleme.mobiauto.mappers.RevendaMapper;
 import dev.victorhleme.mobiauto.services.RevendaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +18,24 @@ import org.springframework.web.bind.annotation.*;
 public class RevendaController {
 
     private final RevendaService revendaService;
+    private final RevendaMapper revendaMapper;
 
     @PostMapping
     public ResponseEntity<RevendaDto> save(RevendaDto revendaDto) {
         log.debug("Creating revenda");
-        return ResponseEntity.ok(revendaService.save(revendaDto));
+        return ResponseEntity.ok(revendaMapper.from(revendaService.save(revendaDto)));
     }
 
     @GetMapping("/{id:[0-9]+}")
     public ResponseEntity<RevendaDto> getById(@PathVariable final Long id) {
         log.debug("Getting revenda by id: {}", id);
-        final RevendaDto campaignDto = revendaService.findById(id);
-        return ResponseEntity.ok(campaignDto);
+        return ResponseEntity.ok(revendaMapper.from(revendaService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<RevendaDto>> findAllPaginated(RevendaFilter filter) {
         log.debug("Get revendas by filter");
-        final Page<RevendaDto> revendaDtos = revendaService.getAll(filter);
-        return ResponseEntity.ok(revendaDtos);
+        return ResponseEntity.ok(revendaService.getAll(filter).map(revendaMapper::from));
     }
 
     @PutMapping("/{id:[0-9]+}")
@@ -44,7 +44,7 @@ public class RevendaController {
         @Valid @RequestBody RevendaDto dto
     ) {
         log.debug("Updating revenda with id: {}", id);
-        return ResponseEntity.ok(revendaService.update(dto));
+        return ResponseEntity.ok(revendaMapper.from(revendaService.update(dto)));
     }
 
     @DeleteMapping("/{id:[0-9]+}")

@@ -1,7 +1,9 @@
 package dev.victorhleme.mobiauto.controllers;
 
-import dev.victorhleme.mobiauto.dtos.OportunidadeDto;
+import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeCreationDto;
+import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeDto;
 import dev.victorhleme.mobiauto.filters.OportunidadeFilter;
+import dev.victorhleme.mobiauto.mappers.OportunidadeMapper;
 import dev.victorhleme.mobiauto.services.OportunidadeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +19,24 @@ import org.springframework.web.bind.annotation.*;
 public class OportunidadeController {
 
     private final OportunidadeService oportunidadeService;
+    private final OportunidadeMapper oportunidadeMapper;
 
     @PostMapping
-    public ResponseEntity<OportunidadeDto> save(OportunidadeDto oportunidadeDto) {
+    public ResponseEntity<OportunidadeDto> save(OportunidadeCreationDto oportunidadeDto) {
         log.debug("Creating oportunidade");
-        return ResponseEntity.ok(oportunidadeService.save(oportunidadeDto));
+        return ResponseEntity.ok(oportunidadeMapper.from(oportunidadeService.save(oportunidadeDto)));
     }
 
     @GetMapping("/{id:[0-9]+}")
     public ResponseEntity<OportunidadeDto> getById(@PathVariable final Long id) {
         log.debug("Getting oportunidade by id: {}", id);
-        final OportunidadeDto oportunidadeDto = oportunidadeService.findById(id);
-        return ResponseEntity.ok(oportunidadeDto);
+        return ResponseEntity.ok(oportunidadeMapper.from(oportunidadeService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<OportunidadeDto>> findAllPaginated(OportunidadeFilter filter) {
         log.debug("Get oportunidades by filter");
-        final Page<OportunidadeDto> oportunidadeDto = oportunidadeService.getAll(filter);
-        return ResponseEntity.ok(oportunidadeDto);
+        return ResponseEntity.ok(oportunidadeService.getAll(filter).map(oportunidadeMapper::from));
     }
 
     @PutMapping("/{id:[0-9]+}")
@@ -44,7 +45,7 @@ public class OportunidadeController {
         @Valid @RequestBody OportunidadeDto dto
     ) {
         log.debug("Updating oportunidade with id: {}", id);
-        return ResponseEntity.ok(oportunidadeService.update(dto));
+        return ResponseEntity.ok(oportunidadeMapper.from(oportunidadeService.update(dto)));
     }
 
     @DeleteMapping("/{id:[0-9]+}")

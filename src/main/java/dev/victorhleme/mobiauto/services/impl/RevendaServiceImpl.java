@@ -27,32 +27,30 @@ public class RevendaServiceImpl implements RevendaService {
     private final RevendaSpecifications revendaSpecifications;
 
     @Override
-    public RevendaDto save(RevendaDto revendaDto) {
+    public Revenda save(RevendaDto revendaDto) {
         Revenda newRevenda = revendaMapper.from(revendaDto);
-        return revendaMapper.from(revendaRepository.save(newRevenda));
+        return revendaRepository.save(newRevenda);
     }
 
     @Override
-    public Page<RevendaDto> getAll(RevendaFilter filter) {
+    public Page<Revenda> getAll(RevendaFilter filter) {
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
-        return revendaRepository.findAll(revendaSpecifications.getSpecification(filter), pageable).map(revendaMapper::from);
+        return revendaRepository.findAll(revendaSpecifications.getSpecification(filter), pageable);
     }
 
     @Override
-    public RevendaDto findById(Long id) {
-        return revendaMapper.from(
-            revendaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(format("Revenda with id {0} not found", id)))
-        );
+    public Revenda findById(Long id) {
+        return revendaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(format("Revenda with id {0} not found", id)));
     }
 
     @Override
-    public RevendaDto update(RevendaDto revendaDto) {
+    public Revenda update(RevendaDto revendaDto) {
         Revenda existing = revendaRepository.findById(revendaDto.getId())
             .orElseThrow(() -> new RuntimeException(format("Revenda with id {0} not found", revendaDto.getId())));
 
         BeanUtils.copyProperties(revendaDto, existing);
-        return revendaMapper.from(revendaRepository.save(existing));
+        return revendaRepository.save(existing);
     }
 
     @Override

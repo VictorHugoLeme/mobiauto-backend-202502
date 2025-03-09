@@ -1,16 +1,17 @@
 package dev.victorhleme.mobiauto.services;
 
 import dev.victorhleme.mobiauto.dtos.RevendaDto;
+import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
 import org.springframework.data.domain.Page;
 
 public interface RevendaService {
-    public RevendaDto save(RevendaDto revendaDto);
+    public Revenda save(RevendaDto revendaDto);
 
-    public Page<RevendaDto> getAll(RevendaFilter filter);
-    public RevendaDto findById(Long id);
+    public Page<Revenda> getAll(RevendaFilter filter);
+    public Revenda findById(Long id);
 
-    public RevendaDto update(RevendaDto revendaDto);
+    public Revenda update(RevendaDto revendaDto);
 
     public void delete(Long id);
 
