@@ -2,6 +2,7 @@ package dev.victorhleme.mobiauto.entities;
 
 import dev.victorhleme.mobiauto.enums.StatusOportunidade;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,24 +20,31 @@ public class Oportunidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(name = "cliente_nome", nullable = false)
     private String clienteNome;
 
+    @NotBlank
     @Column(name = "cliente_email")
     private String clienteEmail;
 
+    @NotBlank
     @Column(name = "cliente_telefone", length = 20)
     private String clienteTelefone;
 
+    @NotBlank
     @Column(name = "veiculo_marca")
     private String veiculoMarca;
 
+    @NotBlank
     @Column(name = "veiculo_modelo")
     private String veiculoModelo;
 
+    @NotBlank
     @Column(name = "veiculo_versao")
     private String veiculoVersao;
 
+    @NotBlank
     @Column(name = "veiculo_ano")
     private String veiculoAno;
 
