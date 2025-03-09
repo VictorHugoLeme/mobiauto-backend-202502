@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.services.impl;
 
-import dev.victorhleme.mobiauto.dtos.RevendaDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaCreationDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaDto;
 import dev.victorhleme.mobiauto.repositories.RevendaRepository;
 import dev.victorhleme.mobiauto.utils.IntegrationTest;
 import jakarta.validation.ConstraintViolationException;
@@ -37,7 +38,7 @@ class RevendaServiceImplTest extends IntegrationTest {
         String nomeSocial,
         Class<Exception> expectedException
     ) {
-        RevendaDto dto = new RevendaDto().withCnpj(cnpj).withNomeSocial(nomeSocial);
+        RevendaCreationDto dto = new RevendaCreationDto().withCnpj(cnpj).withNomeSocial(nomeSocial);
 
         if (expectedException == null) {
             revendaService.save(dto);

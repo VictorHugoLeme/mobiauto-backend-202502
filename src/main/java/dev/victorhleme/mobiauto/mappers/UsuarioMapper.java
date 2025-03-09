@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.mappers;
 
-import dev.victorhleme.mobiauto.dtos.UsuarioDto;
+import dev.victorhleme.mobiauto.dtos.usuario.UsuarioCreationDto;
+import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDto;
 import dev.victorhleme.mobiauto.entities.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -16,10 +17,16 @@ public class UsuarioMapper {
         return dto;
     }
 
-    public Usuario from(final UsuarioDto entity) {
-        final Usuario dto = new Usuario();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
+    public Usuario from(final UsuarioDto dto) {
+        final Usuario entity = new Usuario();
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
+    }
+
+    public Usuario from(final UsuarioCreationDto dto) {
+        final Usuario entity = new Usuario();
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
     }
 
 }

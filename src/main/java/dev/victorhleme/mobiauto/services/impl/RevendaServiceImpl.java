@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.services.impl;
 
-import dev.victorhleme.mobiauto.dtos.RevendaDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaCreationDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaDto;
 import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
 import dev.victorhleme.mobiauto.mappers.RevendaMapper;
@@ -27,7 +28,7 @@ public class RevendaServiceImpl implements RevendaService {
     private final RevendaSpecifications revendaSpecifications;
 
     @Override
-    public Revenda save(RevendaDto revendaDto) {
+    public Revenda save(RevendaCreationDto revendaDto) {
         Revenda newRevenda = revendaMapper.from(revendaDto);
         return revendaRepository.save(newRevenda);
     }

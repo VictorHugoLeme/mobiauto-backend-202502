@@ -1,4 +1,4 @@
-package dev.victorhleme.mobiauto.dtos;
+package dev.victorhleme.mobiauto.dtos.usuario;
 
 import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.enums.Cargo;
@@ -15,7 +15,6 @@ public class UsuarioDto {
     private Long id;
     private String nome;
     private String email;
-    private String senha;
     private Revenda revenda;
     private Cargo cargo;
 }

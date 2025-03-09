@@ -1,12 +1,13 @@
 package dev.victorhleme.mobiauto.services;
 
-import dev.victorhleme.mobiauto.dtos.UsuarioDto;
+import dev.victorhleme.mobiauto.dtos.usuario.UsuarioCreationDto;
+import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDto;
 import dev.victorhleme.mobiauto.entities.Usuario;
 import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import org.springframework.data.domain.Page;
 
 public interface UsuarioService {
-    public Usuario save(UsuarioDto usuarioDto);
+    public Usuario save(UsuarioCreationDto usuarioDto);
 
     public Page<Usuario> getAll(UsuarioFilter filter);
     public Usuario findById(Long id);

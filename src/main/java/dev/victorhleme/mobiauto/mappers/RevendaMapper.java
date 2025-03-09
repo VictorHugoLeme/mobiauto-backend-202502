@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.mappers;
 
-import dev.victorhleme.mobiauto.dtos.RevendaDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaCreationDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaDto;
 import dev.victorhleme.mobiauto.entities.Revenda;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -16,10 +17,16 @@ public class RevendaMapper {
         return dto;
     }
 
-    public Revenda from(final RevendaDto entity) {
-        final Revenda dto = new Revenda();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
+    public Revenda from(final RevendaDto dto) {
+        final Revenda entity = new Revenda();
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
+    }
+
+    public Revenda from(final RevendaCreationDto dto) {
+        final Revenda entity = new Revenda();
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
     }
 
 }

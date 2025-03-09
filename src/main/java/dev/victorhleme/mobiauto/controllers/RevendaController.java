@@ -1,15 +1,20 @@
 package dev.victorhleme.mobiauto.controllers;
 
-import dev.victorhleme.mobiauto.dtos.RevendaDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaCreationDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaDto;
+import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
 import dev.victorhleme.mobiauto.mappers.RevendaMapper;
 import dev.victorhleme.mobiauto.services.RevendaService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+import static dev.victorhleme.mobiauto.utils.ApplicationUtils.getUri;
 
 @Slf4j
 @RestController()
@@ -21,9 +26,11 @@ public class RevendaController {
     private final RevendaMapper revendaMapper;
 
     @PostMapping
-    public ResponseEntity<RevendaDto> save(RevendaDto revendaDto) {
+    public ResponseEntity<?> save(@RequestBody RevendaCreationDto revendaDto) {
         log.debug("Creating revenda");
-        return ResponseEntity.ok(revendaMapper.from(revendaService.save(revendaDto)));
+        Revenda revenda = revendaService.save(revendaDto);
+        final URI uri = getUri(revenda.getId());
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/{id:[0-9]+}")
@@ -41,7 +48,7 @@ public class RevendaController {
     @PutMapping("/{id:[0-9]+}")
     public ResponseEntity<RevendaDto> update(
         @PathVariable("id") Long id,
-        @Valid @RequestBody RevendaDto dto
+        @RequestBody RevendaDto dto
     ) {
         log.debug("Updating revenda with id: {}", id);
         return ResponseEntity.ok(revendaMapper.from(revendaService.update(dto)));

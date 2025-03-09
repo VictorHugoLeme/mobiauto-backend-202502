@@ -1,4 +1,4 @@
-package dev.victorhleme.mobiauto.dtos;
+package dev.victorhleme.mobiauto.dtos.revenda;
 
 import dev.victorhleme.mobiauto.entities.Oportunidade;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,7 @@ import java.util.List;
 @With
 @AllArgsConstructor
 @NoArgsConstructor
-public class RevendaDto {
-    private Long id;
+public class RevendaCreationDto {
     private String cnpj;
     private String nomeSocial;
-    private List<Oportunidade> oportunidades;
 }

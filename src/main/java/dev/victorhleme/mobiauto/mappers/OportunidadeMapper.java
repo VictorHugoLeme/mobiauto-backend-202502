@@ -17,15 +17,15 @@ public class OportunidadeMapper {
         return dto;
     }
 
-    public Oportunidade from(final OportunidadeDto entity) {
-        final Oportunidade dto = new Oportunidade();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
+    public Oportunidade from(final OportunidadeDto dto) {
+        final Oportunidade entity = new Oportunidade();
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
     }
 
-    public Oportunidade from(final OportunidadeCreationDto entity) {
-        final Oportunidade dto = new Oportunidade();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
+    public Oportunidade from(final OportunidadeCreationDto dto) {
+        final Oportunidade entity = new Oportunidade();
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
     }
 }

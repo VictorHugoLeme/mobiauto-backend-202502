@@ -35,6 +35,8 @@ public class OportunidadeServiceImpl implements OportunidadeService {
     @Override
     public Oportunidade save(OportunidadeCreationDto oportunidadeDto) {
         Oportunidade newOportunidade = oportunidadeMapper.from(oportunidadeDto);
+        newOportunidade.setResponsavel(usuarioService.findById(oportunidadeDto.getResponsavelId()));
+        newOportunidade.setRevenda(revendaService.findById(oportunidadeDto.getRevendaId()));
         return oportunidadeRepository.save(newOportunidade);
     }
 
