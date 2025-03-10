@@ -31,6 +31,9 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
+    @Column(name = "first_access", nullable = false)
+    private boolean firstAccess = true;
+
     @ManyToOne
     @JoinColumn(name = "revenda_id", nullable = false)
     private Revenda revenda;

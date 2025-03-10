@@ -3,6 +3,7 @@ package dev.victorhleme.mobiauto.services.impl;
 import dev.victorhleme.mobiauto.dtos.revenda.RevendaCreationDto;
 import dev.victorhleme.mobiauto.dtos.revenda.RevendaDto;
 import dev.victorhleme.mobiauto.entities.Revenda;
+import dev.victorhleme.mobiauto.exceptions.NotFoundException;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
 import dev.victorhleme.mobiauto.mappers.RevendaMapper;
 import dev.victorhleme.mobiauto.repositories.RevendaRepository;
@@ -15,8 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static java.text.MessageFormat.format;
 
 @Service
 @RequiredArgsConstructor
@@ -42,13 +41,13 @@ public class RevendaServiceImpl implements RevendaService {
     @Override
     public Revenda findById(Long id) {
         return revendaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(format("Revenda with id {0} not found", id)));
+                .orElseThrow(() -> new NotFoundException(Revenda.class, id));
     }
 
     @Override
     public Revenda update(RevendaDto revendaDto) {
         Revenda existing = revendaRepository.findById(revendaDto.getId())
-            .orElseThrow(() -> new RuntimeException(format("Revenda with id {0} not found", revendaDto.getId())));
+            .orElseThrow(() -> new NotFoundException(Revenda.class, revendaDto.getId()));
 
         BeanUtils.copyProperties(revendaDto, existing);
         return revendaRepository.save(existing);

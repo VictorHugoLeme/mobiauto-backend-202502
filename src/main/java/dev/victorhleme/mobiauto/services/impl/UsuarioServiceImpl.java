@@ -3,10 +3,12 @@ package dev.victorhleme.mobiauto.services.impl;
 import dev.victorhleme.mobiauto.dtos.usuario.UsuarioCreationDto;
 import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDto;
 import dev.victorhleme.mobiauto.entities.Usuario;
+import dev.victorhleme.mobiauto.exceptions.NotFoundException;
 import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import dev.victorhleme.mobiauto.mappers.UsuarioMapper;
 import dev.victorhleme.mobiauto.repositories.UsuarioRepository;
 import dev.victorhleme.mobiauto.repositories.specifications.UsuarioSpecifications;
+import dev.victorhleme.mobiauto.services.EmailService;
 import dev.victorhleme.mobiauto.services.RevendaService;
 import dev.victorhleme.mobiauto.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.text.MessageFormat.format;
+import static dev.victorhleme.mobiauto.enums.PasswordResetTokenType.FIRST_ACCESS;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioSpecifications usuarioSpecifications;
     private final RevendaService revendaService;
-
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -40,7 +42,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuarioDto.getRevendaId() != null)
             newUsuario.setRevenda(revendaService.findById(usuarioDto.getRevendaId()));
 
-        return usuarioRepository.save(newUsuario);
+        newUsuario = usuarioRepository.save(newUsuario);
+        emailService.sendEmail(newUsuario, FIRST_ACCESS);
+        return newUsuario;
     }
 
     @Override
@@ -52,13 +56,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario findById(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(format("Usuario with id {0} not found", id)));
+            .orElseThrow(() -> new NotFoundException(Usuario.class, id));
     }
 
     @Override
     public Usuario update(UsuarioDto usuarioDto) {
         Usuario existing = usuarioRepository.findById(usuarioDto.getId())
-            .orElseThrow(() -> new RuntimeException(format("Usuario with id {0} not found", usuarioDto.getId())));
+            .orElseThrow(() -> new NotFoundException(Usuario.class, usuarioDto.getId()));
         BeanUtils.copyProperties(usuarioDto, existing);
         return usuarioRepository.save(existing);
     }
