@@ -35,7 +35,7 @@ public class OportunidadeController {
     }
 
     @GetMapping("/{id:[0-9]+}")
-    public ResponseEntity<OportunidadeDto> getById(@PathVariable final Long id) {
+    public ResponseEntity<OportunidadeDetailsDto> getById(@PathVariable final Long id) {
         log.debug("Finding oportunidade by id: {}", id);
 
         Oportunidade oportunidade = oportunidadeService.findById(id);
@@ -45,22 +45,22 @@ public class OportunidadeController {
             "PERM_OPORTUNIDADE_MANAGE_" + revendaId,
             "PERM_OPORTUNIDADE_EDIT_" + revendaId);
 
-        return ResponseEntity.ok(oportunidadeMapper.from(oportunidade));
+        return ResponseEntity.ok(oportunidadeMapper.detailsFrom(oportunidade));
     }
 
     @GetMapping
-    public ResponseEntity<Page<OportunidadeDto>> findAllPaginated(OportunidadeFilter filter) {
+    public ResponseEntity<Page<OportunidadeDetailsDto>> findAllPaginated(OportunidadeFilter filter) {
         log.debug("Finding oportunidades by filter");
 
         permissionService.checkAuthority(
             "PERM_OPORTUNIDADE_MANAGE_" + filter.getRevendaId(),
             "PERM_OPORTUNIDADE_EDIT_" + filter.getRevendaId());
 
-        return ResponseEntity.ok(oportunidadeService.findAll(filter).map(oportunidadeMapper::from));
+        return ResponseEntity.ok(oportunidadeService.findAll(filter).map(oportunidadeMapper::detailsFrom));
     }
 
     @PutMapping("/transfer/{id:[0-9]+}")
-    public ResponseEntity<OportunidadeDto> transfer(
+    public ResponseEntity<OportunidadeDetailsDto> transfer(
         @PathVariable("id") Long id,
         @RequestBody OportunidadeTransferDto dto
     ) {
@@ -69,17 +69,17 @@ public class OportunidadeController {
         permissionService.checkAuthority(
             "PERM_OPORTUNIDADE_MANAGE_" + getRevendaId(dto.getId()));
 
-        return ResponseEntity.ok(oportunidadeMapper.from(oportunidadeService.transfer(dto)));
+        return ResponseEntity.ok(oportunidadeMapper.detailsFrom(oportunidadeService.transfer(dto)));
     }
 
     @PutMapping("/finish/{id:[0-9]+}")
-    public ResponseEntity<OportunidadeDto> finish(
+    public ResponseEntity<OportunidadeDetailsDto> finish(
         @PathVariable("id") Long id,
         @RequestBody OportunidadeFinishDto dto
     ) {
         log.debug("Finishing oportunidade with id: {}, reason: {}", id, dto.getMotivoConclusao());
         permissionService.checkCanEditOportunidade(oportunidadeService.findById(id));
-        return ResponseEntity.ok(oportunidadeMapper.from(oportunidadeService.finish(dto)));
+        return ResponseEntity.ok(oportunidadeMapper.detailsFrom(oportunidadeService.finish(dto)));
     }
 
     @PutMapping("/{id:[0-9]+}")

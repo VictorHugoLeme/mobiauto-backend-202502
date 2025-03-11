@@ -14,6 +14,7 @@ import dev.victorhleme.mobiauto.services.RevendaService;
 import dev.victorhleme.mobiauto.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,9 @@ import static dev.victorhleme.mobiauto.enums.PasswordResetTokenType.FIRST_ACCESS
 @Transactional
 public class UsuarioServiceImpl implements UsuarioService {
 
+    @Value("${app.default-password}")
+    protected String defaultPassword;
+
     private final UsuarioMapper usuarioMapper;
     private final UsuarioRepository usuarioRepository;
     private final UsuarioSpecifications usuarioSpecifications;
@@ -41,13 +45,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario save(UsuarioCreationDto usuarioDto) {
         Usuario newUsuario = usuarioMapper.from(usuarioDto);
 
-        newUsuario.setSenha(passwordEncoder.encode(generatePassword()));
+        newUsuario.setSenha(passwordEncoder.encode(
+            usuarioDto.getGeneratePassword() ? generatePassword() : defaultPassword));
 
         if (usuarioDto.getRevendaId() != null)
             newUsuario.setRevenda(revendaService.findById(usuarioDto.getRevendaId()));
 
         newUsuario = usuarioRepository.save(newUsuario);
-        emailService.sendEmail(newUsuario, FIRST_ACCESS);
+
+        // Will only return the token if a password has been generated
+        if (usuarioDto.getGeneratePassword())
+            newUsuario.setToken(emailService.sendEmail(newUsuario, FIRST_ACCESS));
         return newUsuario;
     }
 

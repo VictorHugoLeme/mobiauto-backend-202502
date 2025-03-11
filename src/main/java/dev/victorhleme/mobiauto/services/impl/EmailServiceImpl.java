@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Override
-    public void sendEmail(Usuario usuario, PasswordResetTokenType type) {
+    public String sendEmail(Usuario usuario, PasswordResetTokenType type) {
 
         String resetToken = authTokenService.generateResetToken(usuario);
         PasswordResetToken passwordResetToken = refreshOrCreate(resetToken, usuario, type);
@@ -46,6 +46,8 @@ public class EmailServiceImpl implements EmailService {
         // Further information can be found in the documantation and Postman Collection
         log.info("Password reset url: {}", link);
         log.info("Password reset token: {}", resetToken);
+
+        return resetToken;
 
     }
 

@@ -19,7 +19,7 @@ public class OportunidadeFilter extends Pagination {
     private String veiculoVersao;
     private String veiculoAno;
     private StatusOportunidade status;
-    private Long usuarioId;
+    private Long responsavelId;
     private LocalDateTime conclusaoBefore;
     private LocalDateTime conclusaoAfter;
     private LocalDateTime atribuicaoBefore;

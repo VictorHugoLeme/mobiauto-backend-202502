@@ -58,12 +58,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void recoverPassword(EmailDto emailDto) {
+    public String recoverPassword(EmailDto emailDto) {
         log.info("Recovering password: {}", emailDto.getEmail());
         Usuario usuario = usuarioRepository.findByEmail(emailDto.getEmail())
             .orElseThrow(() -> new NotFoundException(Usuario.class, emailDto.getEmail()));
 
-        emailService.sendEmail(usuario, PASSWORD_RECOVERY);
+        usuario.setToken(emailService.sendEmail(usuario, PASSWORD_RECOVERY));
+        return usuario.getToken();
     }
 
     @Override

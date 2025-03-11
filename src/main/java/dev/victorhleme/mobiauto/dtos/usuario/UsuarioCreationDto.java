@@ -15,4 +15,5 @@ public class UsuarioCreationDto {
     private String email;
     private Long revendaId;
     private Cargo cargo;
+    private Boolean generatePassword;
 }

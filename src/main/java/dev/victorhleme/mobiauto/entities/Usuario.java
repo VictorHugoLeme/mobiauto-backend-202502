@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "usuario")
@@ -41,5 +42,11 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private Cargo cargo;
+
+    // For practical reasons
+    // This must be sent via e-mail in a real application
+    @ToString.Exclude
+    @Transient
+    private String token;
 
 }

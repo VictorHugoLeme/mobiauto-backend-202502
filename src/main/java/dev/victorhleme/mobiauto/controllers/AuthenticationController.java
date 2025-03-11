@@ -28,8 +28,7 @@ public class AuthenticationController {
     @PostMapping("/recover-password")
     public ResponseEntity<?> recoverPassword(@RequestBody @Valid EmailDto emailDto) {
         log.debug("Usuario with email {} recovering password", emailDto.getEmail());
-        authenticationService.recoverPassword(emailDto);
-        return ResponseEntity.ok("Recovery email sent");
+        return ResponseEntity.ok(authenticationService.recoverPassword(emailDto));
     }
 
     @PostMapping("/reset-password")

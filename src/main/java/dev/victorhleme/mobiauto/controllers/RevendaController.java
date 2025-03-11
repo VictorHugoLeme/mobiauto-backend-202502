@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.controllers;
 
 import dev.victorhleme.mobiauto.dtos.revenda.RevendaCreationDto;
+import dev.victorhleme.mobiauto.dtos.revenda.RevendaDetailsDto;
 import dev.victorhleme.mobiauto.dtos.revenda.RevendaDto;
 import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
@@ -37,27 +38,27 @@ public class RevendaController {
     }
 
     @GetMapping("/{id:[0-9]+}")
-    public ResponseEntity<RevendaDto> findById(@PathVariable final Long id) {
+    public ResponseEntity<RevendaDetailsDto> findById(@PathVariable final Long id) {
         log.debug("Finding revenda by id: {}", id);
         permissionService.checkForAdmin();
-        return ResponseEntity.ok(revendaMapper.from(revendaService.findById(id)));
+        return ResponseEntity.ok(revendaMapper.detailsFrom(revendaService.findById(id)));
     }
 
     @GetMapping
-    public ResponseEntity<Page<RevendaDto>> findAllPaginated(RevendaFilter filter) {
+    public ResponseEntity<Page<RevendaDetailsDto>> findAllPaginated(RevendaFilter filter) {
         log.debug("Finding revendas by filter");
         permissionService.checkForAdmin();
-        return ResponseEntity.ok(revendaService.findAll(filter).map(revendaMapper::from));
+        return ResponseEntity.ok(revendaService.findAll(filter).map(revendaMapper::detailsFrom));
     }
 
     @PutMapping("/{id:[0-9]+}")
-    public ResponseEntity<RevendaDto> update(
+    public ResponseEntity<RevendaDetailsDto> update(
         @PathVariable("id") Long id,
         @RequestBody RevendaDto dto
     ) {
         log.debug("Updating revenda with id: {}", id);
         permissionService.checkForAdmin();
-        return ResponseEntity.ok(revendaMapper.from(revendaService.update(dto)));
+        return ResponseEntity.ok(revendaMapper.detailsFrom(revendaService.update(dto)));
     }
 
     @DeleteMapping("/{id:[0-9]+}")

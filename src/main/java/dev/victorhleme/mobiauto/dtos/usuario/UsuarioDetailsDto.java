@@ -11,14 +11,10 @@ import lombok.With;
 @With
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
+public class UsuarioDetailsDto {
     private Long id;
     private String nome;
     private String email;
     private Revenda revenda;
     private Cargo cargo;
-
-    // For practical reasons
-    // This would preferably be sent via e-mail
-    private String token;
 }

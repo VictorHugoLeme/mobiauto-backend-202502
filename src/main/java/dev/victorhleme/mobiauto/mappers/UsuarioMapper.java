@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.mappers;
 
 import dev.victorhleme.mobiauto.dtos.usuario.UsuarioCreationDto;
+import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDetailsDto;
 import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDto;
 import dev.victorhleme.mobiauto.entities.Usuario;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,12 @@ public class UsuarioMapper {
         final Usuario entity = new Usuario();
         BeanUtils.copyProperties(dto, entity);
         return entity;
+    }
+
+    public UsuarioDetailsDto detailsFrom(final Usuario entity) {
+        final UsuarioDetailsDto dto = new UsuarioDetailsDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 
 }

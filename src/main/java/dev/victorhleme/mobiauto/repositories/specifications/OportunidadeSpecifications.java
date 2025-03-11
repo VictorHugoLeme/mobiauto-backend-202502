@@ -1,17 +1,13 @@
 package dev.victorhleme.mobiauto.repositories.specifications;
 
 import dev.victorhleme.mobiauto.entities.Oportunidade;
-import dev.victorhleme.mobiauto.entities.Usuario;
-import dev.victorhleme.mobiauto.enums.StatusOportunidade;
 import dev.victorhleme.mobiauto.filters.OportunidadeFilter;
-import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import dev.victorhleme.mobiauto.utils.SpecificationUtils;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +34,8 @@ public class OportunidadeSpecifications {
             predicates.add(SpecificationUtils.dateEqualOrBefore("dataAtribuicao", filter.getAtribuicaoBefore(), cb, root));
             predicates.add(SpecificationUtils.dateEqualOrAfter("dataAtribuicao", filter.getAtribuicaoAfter(), cb, root));
 
-            if (filter.getRevendaId() != null)
-                predicates.add(cb.equal(root.get("usuario").get("id"), filter.getUsuarioId()));
+            if (filter.getResponsavelId() != null)
+                predicates.add(cb.equal(root.get("responsavel").get("id"), filter.getResponsavelId()));
 
             if (filter.getRevendaId() != null)
                 predicates.add(cb.equal(root.get("revenda").get("id"), filter.getRevendaId()));

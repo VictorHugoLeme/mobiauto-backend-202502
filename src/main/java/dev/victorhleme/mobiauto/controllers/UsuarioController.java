@@ -1,6 +1,7 @@
 package dev.victorhleme.mobiauto.controllers;
 
 import dev.victorhleme.mobiauto.dtos.usuario.UsuarioCreationDto;
+import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDetailsDto;
 import dev.victorhleme.mobiauto.dtos.usuario.UsuarioDto;
 import dev.victorhleme.mobiauto.entities.Usuario;
 import dev.victorhleme.mobiauto.filters.UsuarioFilter;
@@ -37,27 +38,27 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id:[0-9]+}")
-    public ResponseEntity<UsuarioDto> findById(@PathVariable final Long id) {
+    public ResponseEntity<UsuarioDetailsDto> findById(@PathVariable final Long id) {
         log.debug("Finding usuario by id: {}", id);
         permissionService.checkAuthority("PERM_USUARIO_READ_" + usuarioService.getRevendaIdFromUser(id));
-        return ResponseEntity.ok(usuarioMapper.from(usuarioService.findById(id)));
+        return ResponseEntity.ok(usuarioMapper.detailsFrom(usuarioService.findById(id)));
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioDto>> findAllPaginated(UsuarioFilter filter) {
+    public ResponseEntity<Page<UsuarioDetailsDto>> findAllPaginated(UsuarioFilter filter) {
         log.debug("Finding usuarios by filter");
         permissionService.checkAuthority("PERM_USUARIO_READ_" + filter.getRevendaId());
-        return ResponseEntity.ok(usuarioService.findAllPageable(filter).map(usuarioMapper::from));
+        return ResponseEntity.ok(usuarioService.findAllPageable(filter).map(usuarioMapper::detailsFrom));
     }
 
     @PutMapping("/{id:[0-9]+}")
-    public ResponseEntity<UsuarioDto> update(
+    public ResponseEntity<UsuarioDetailsDto> update(
         @PathVariable("id") Long id,
         @RequestBody UsuarioDto dto
     ) {
         log.debug("Updating usuario with id: {}", id);
         permissionService.checkAuthority("PERM_USUARIO_EDIT_" + usuarioService.findById(id).getRevenda().getId());
-        return ResponseEntity.ok(usuarioMapper.from(usuarioService.update(dto)));
+        return ResponseEntity.ok(usuarioMapper.detailsFrom(usuarioService.update(dto)));
     }
 
     @DeleteMapping("/{id:[0-9]+}")
