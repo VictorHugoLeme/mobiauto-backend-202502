@@ -8,7 +8,6 @@ import dev.victorhleme.mobiauto.exceptions.NotFoundException;
 import dev.victorhleme.mobiauto.exceptions.UserFirstAccessException;
 import dev.victorhleme.mobiauto.repositories.PasswordResetTokenRepository;
 import dev.victorhleme.mobiauto.repositories.UsuarioRepository;
-import dev.victorhleme.mobiauto.security.Authentication;
 import dev.victorhleme.mobiauto.security.UserDetailsImpl;
 import dev.victorhleme.mobiauto.services.AuthenticationService;
 import dev.victorhleme.mobiauto.services.EmailService;
@@ -38,7 +37,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Lazy
     private final AuthenticationManager authenticationManager;
-    private final Authentication authentication;
     private final UsuarioRepository usuarioRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final AuthTokenService authTokenService;
@@ -61,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void recoverPassword(EmailDto emailDto) {
-        log.info("Recovery password: {}", emailDto.getEmail());
+        log.info("Recovering password: {}", emailDto.getEmail());
         Usuario usuario = usuarioRepository.findByEmail(emailDto.getEmail())
             .orElseThrow(() -> new NotFoundException(Usuario.class, emailDto.getEmail()));
 

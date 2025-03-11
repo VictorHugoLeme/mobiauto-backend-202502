@@ -36,13 +36,14 @@ public class EmailServiceImpl implements EmailService {
 
         passwordResetTokenRepository.save(passwordResetToken);
 
-        String operation = type.operation;
+        String operation = "reset-password";
         String subject = type.emailSubject;
         Integer expiryTime = FIRST_ACCESS.getExpiryMinutes();
         String link = MessageFormat.format("{0}/v1/auth/{1}", webserviceHostname, operation);
 
         // Now, we could send an e-mail, with a link for password resetting.
-        // For practical reasons, I'm going to just log the link.
+        // For practical reasons, I'm going to just log the link and token below.
+        // Further information can be found in the documantation and Postman Collection
         log.info("Password reset url: {}", link);
         log.info("Password reset token: {}", resetToken);
 

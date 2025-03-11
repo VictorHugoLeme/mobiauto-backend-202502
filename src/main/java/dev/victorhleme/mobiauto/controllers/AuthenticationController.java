@@ -25,14 +25,14 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.login(loginDto));
     }
 
-    @PostMapping("/recovery-password")
+    @PostMapping("/recover-password")
     public ResponseEntity<?> recoverPassword(@RequestBody @Valid EmailDto emailDto) {
         log.debug("Usuario with email {} recovering password", emailDto.getEmail());
         authenticationService.recoverPassword(emailDto);
         return ResponseEntity.ok("Recovery email sent");
     }
 
-    @PostMapping("/first-access")
+    @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody @Valid PasswordResetDto passwordResetDto) {
         log.debug("Usuario with token {} resetting password", passwordResetDto.getToken());
         LoginResponseDto loginResponseDto = authenticationService.resetPassword(passwordResetDto);

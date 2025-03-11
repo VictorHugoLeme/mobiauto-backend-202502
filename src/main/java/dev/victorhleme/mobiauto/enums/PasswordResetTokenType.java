@@ -5,18 +5,16 @@ import lombok.Setter;
 
 public enum PasswordResetTokenType {
 
-    PASSWORD_RECOVERY("MobiAuto password recovery", "reset-password"),
-    FIRST_ACCESS("Welcome to MobiAuto", "first-access");
+    PASSWORD_RECOVERY("MobiAuto password recovery"),
+    FIRST_ACCESS("Welcome to MobiAuto");
 
     @Setter
     @Getter
     private Integer expiryMinutes;
     public String emailSubject;
-    public String operation;
 
-    PasswordResetTokenType(String emailSubject, String operation) {
+    PasswordResetTokenType(String emailSubject) {
         this.emailSubject = emailSubject;
-        this.operation = operation;
     }
 
 }

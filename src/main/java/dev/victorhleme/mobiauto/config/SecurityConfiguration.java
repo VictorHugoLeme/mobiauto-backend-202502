@@ -1,13 +1,10 @@
 package dev.victorhleme.mobiauto.config;
 
-import dev.victorhleme.mobiauto.security.ApiKeySecurityFilter;
 import dev.victorhleme.mobiauto.security.JwtSecurityFilter;
 import dev.victorhleme.mobiauto.security.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -29,12 +26,6 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-
-    @Value("${app.api-key:TOKEN}")
-    private String API_KEY;
-
-    @Value("${app.api-key-header:X-API-KEY}")
-    private String API_KEY_HEADER;
 
     private final UserDetailsService userDetailsService;
     private final TokenService tokenService;
@@ -63,21 +54,15 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain apiKeyFilterChain(HttpSecurity http) throws Exception {
-        sharedSecurityConfiguration(http);
-        http
-            .securityMatcher("v1/usuario/")
-            .addFilterAfter(new ApiKeySecurityFilter(API_KEY, API_KEY_HEADER), UsernamePasswordAuthenticationFilter.class)
-            .authorizeHttpRequests(requests -> requests
-                .requestMatchers(HttpMethod.POST, "v1/usuario").authenticated());
-        return http.build();
-    }
-
-    @Bean
     public SecurityFilterChain jwtFilterChain(HttpSecurity http) throws Exception {
         sharedSecurityConfiguration(http);
         http
-            .securityMatcher("")
+            .securityMatcher(
+                "/v1/oportunidade",
+                "/v1/revenda",
+                "/v1/usuario",
+                "/v1/usuario"
+            )
             .addFilterBefore(new JwtSecurityFilter(tokenService, userDetailsService), UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
         return http.build();
