@@ -49,7 +49,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain publicFilterChain(HttpSecurity http) throws Exception {
         sharedSecurityConfiguration(http);
         http.securityMatcher(
-                "/v1/auth/**")
+                "/v1/auth/**",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs/**")
             .authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
         return http.build();
     }

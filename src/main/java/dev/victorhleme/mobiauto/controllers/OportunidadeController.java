@@ -6,6 +6,8 @@ import dev.victorhleme.mobiauto.filters.OportunidadeFilter;
 import dev.victorhleme.mobiauto.mappers.OportunidadeMapper;
 import dev.victorhleme.mobiauto.services.OportunidadeService;
 import dev.victorhleme.mobiauto.services.impl.PermissionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import static dev.victorhleme.mobiauto.utils.ApplicationUtils.getUri;
 @Slf4j
 @RestController()
 @RequestMapping("/v1/oportunidade")
+@Tag(name = "Oportunidade Controller")
 @RequiredArgsConstructor
 public class OportunidadeController {
 
@@ -27,6 +30,7 @@ public class OportunidadeController {
     private final PermissionService permissionService;
 
     @PostMapping
+    @Operation(summary = "Create an Oportunidade")
     public ResponseEntity<?> save(@RequestBody OportunidadeCreationDto oportunidadeDto) {
         log.debug("Creating oportunidade");
         Oportunidade oportunidade = oportunidadeService.save(oportunidadeDto);
@@ -35,6 +39,7 @@ public class OportunidadeController {
     }
 
     @GetMapping("/{id:[0-9]+}")
+    @Operation(summary = "Find Oportunidade by id")
     public ResponseEntity<OportunidadeDetailsDto> getById(@PathVariable final Long id) {
         log.debug("Finding oportunidade by id: {}", id);
 
@@ -49,6 +54,7 @@ public class OportunidadeController {
     }
 
     @GetMapping
+    @Operation(summary = "List Oportunidades filtered and paginated")
     public ResponseEntity<Page<OportunidadeDetailsDto>> findAllPaginated(OportunidadeFilter filter) {
         log.debug("Finding oportunidades by filter");
 
@@ -60,6 +66,7 @@ public class OportunidadeController {
     }
 
     @PutMapping("/transfer/{id:[0-9]+}")
+    @Operation(summary = "Transfer an Oportunidade to other Usuario")
     public ResponseEntity<OportunidadeDetailsDto> transfer(
         @PathVariable("id") Long id,
         @RequestBody OportunidadeTransferDto dto
@@ -73,6 +80,7 @@ public class OportunidadeController {
     }
 
     @PutMapping("/finish/{id:[0-9]+}")
+    @Operation(summary = "Finish an Oportunidade")
     public ResponseEntity<OportunidadeDetailsDto> finish(
         @PathVariable("id") Long id,
         @RequestBody OportunidadeFinishDto dto
@@ -83,6 +91,7 @@ public class OportunidadeController {
     }
 
     @PutMapping("/{id:[0-9]+}")
+    @Operation(summary = "Update an Oportunidade")
     public ResponseEntity<OportunidadeDetailsDto> update(
         @PathVariable("id") Long id,
         @RequestBody OportunidadeUpdateDto dto
@@ -93,6 +102,7 @@ public class OportunidadeController {
     }
 
     @DeleteMapping("/{id:[0-9]+}")
+    @Operation(summary = "Delete an Oportunidade")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         log.debug("Deleting oportunidade with id: {}", id);
         permissionService.checkAuthority("PERM_OPORTUNIDADE_MANAGE_" + getRevendaId(id));

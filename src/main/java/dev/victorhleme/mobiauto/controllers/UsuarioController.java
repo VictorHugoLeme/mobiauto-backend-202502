@@ -8,6 +8,8 @@ import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import dev.victorhleme.mobiauto.mappers.UsuarioMapper;
 import dev.victorhleme.mobiauto.services.UsuarioService;
 import dev.victorhleme.mobiauto.services.impl.PermissionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import static dev.victorhleme.mobiauto.utils.ApplicationUtils.getUri;
 @Slf4j
 @RestController()
 @RequestMapping("/v1/usuario")
+@Tag(name = "Usuario Controller")
 @RequiredArgsConstructor
 public class UsuarioController {
 
@@ -29,6 +32,7 @@ public class UsuarioController {
     private final PermissionService permissionService;
 
     @PostMapping
+    @Operation(summary = "Create an Usuario")
     public ResponseEntity<?> save(@RequestBody UsuarioCreationDto usuarioDto) {
         log.debug("Creating usuario");
         permissionService.checkAuthority("PERM_USUARIO_CREATE_" + usuarioDto.getRevendaId());
@@ -38,6 +42,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id:[0-9]+}")
+    @Operation(summary = "Find an Usuario by id")
     public ResponseEntity<UsuarioDetailsDto> findById(@PathVariable final Long id) {
         log.debug("Finding usuario by id: {}", id);
         permissionService.checkAuthority("PERM_USUARIO_READ_" + usuarioService.getRevendaIdFromUser(id));
@@ -45,6 +50,7 @@ public class UsuarioController {
     }
 
     @GetMapping
+    @Operation(summary = "List Usuarios filtered and paginated")
     public ResponseEntity<Page<UsuarioDetailsDto>> findAllPaginated(UsuarioFilter filter) {
         log.debug("Finding usuarios by filter");
         permissionService.checkAuthority("PERM_USUARIO_READ_" + filter.getRevendaId());
@@ -52,6 +58,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id:[0-9]+}")
+    @Operation(summary = "Update an Usuario")
     public ResponseEntity<UsuarioDetailsDto> update(
         @PathVariable("id") Long id,
         @RequestBody UsuarioDto dto
@@ -62,6 +69,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id:[0-9]+}")
+    @Operation(summary = "Delete an Usuario")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         log.debug("Deleting usuario with id: {}", id);
         permissionService.checkAuthority("PERM_USUARIO_MANAGE_" + usuarioService.findById(id).getRevenda().getId());

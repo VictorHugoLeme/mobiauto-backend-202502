@@ -8,6 +8,8 @@ import dev.victorhleme.mobiauto.filters.RevendaFilter;
 import dev.victorhleme.mobiauto.mappers.RevendaMapper;
 import dev.victorhleme.mobiauto.services.RevendaService;
 import dev.victorhleme.mobiauto.services.impl.PermissionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import static dev.victorhleme.mobiauto.utils.ApplicationUtils.getUri;
 @Slf4j
 @RestController()
 @RequestMapping("/v1/revenda")
+@Tag(name = "Revenda Controller")
 @RequiredArgsConstructor
 public class RevendaController {
 
@@ -29,6 +32,7 @@ public class RevendaController {
     private final PermissionService permissionService;
 
     @PostMapping
+    @Operation(summary = "Create a Revenda")
     public ResponseEntity<?> save(@RequestBody RevendaCreationDto revendaDto) {
         log.debug("Creating revenda");
         permissionService.checkForAdmin();
@@ -38,6 +42,7 @@ public class RevendaController {
     }
 
     @GetMapping("/{id:[0-9]+}")
+    @Operation(summary = "Find a Revenda by id")
     public ResponseEntity<RevendaDetailsDto> findById(@PathVariable final Long id) {
         log.debug("Finding revenda by id: {}", id);
         permissionService.checkForAdmin();
@@ -45,6 +50,7 @@ public class RevendaController {
     }
 
     @GetMapping
+    @Operation(summary = "List Revendas fintered and paginated")
     public ResponseEntity<Page<RevendaDetailsDto>> findAllPaginated(RevendaFilter filter) {
         log.debug("Finding revendas by filter");
         permissionService.checkForAdmin();
@@ -52,6 +58,7 @@ public class RevendaController {
     }
 
     @PutMapping("/{id:[0-9]+}")
+    @Operation(summary = "Update a Revenda")
     public ResponseEntity<RevendaDetailsDto> update(
         @PathVariable("id") Long id,
         @RequestBody RevendaDto dto
@@ -62,6 +69,7 @@ public class RevendaController {
     }
 
     @DeleteMapping("/{id:[0-9]+}")
+    @Operation(summary = "Delete a Revenda")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         log.debug("Deleting revenda with id: {}", id);
         permissionService.checkForAdmin();
