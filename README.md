@@ -143,6 +143,32 @@ Para isso, realize uma requisição ```PUT``` para o endpoint ```/v1/oportunidad
 }
 ```
 
+### 📜 Listagem de objetos.
+
+- Esta aplicação conta com listagem e paginação utilizando Specifications.
+- Implementei cada Specification para possibilitar filtragem por todos ou quase todos os campos presentes em cada entidade.
+- Oportunidades, por exemplo, podem ser filtradas pelos seguintes campos:
+```JAVA
+private String clienteNome;
+private String clienteEmail;
+private String clienteTelefone;
+private String veiculoMarca;
+private String veiculoModelo;
+private String veiculoVersao;
+private String veiculoAno;
+private StatusOportunidade status;
+private Long responsavelId;
+private LocalDateTime conclusaoBefore;
+private LocalDateTime conclusaoAfter;
+private LocalDateTime atribuicaoBefore;
+private LocalDateTime atribuicaoAfter;
+private Long revendaId;
+```
+- Estes campos devem ser passados via ```QueryParameters``` ao realizar uma requisição ```GET``` para o endpoint ```/v1/oportunidade```
+- Se estiver utilizando a Collection do Postman fornecida, os parâmetros já estarão presentes, faltando apenas preenchimento.
+
+- Campos como *clienteNome* contam com especificação branda, utilizando o método ```fieldLike``` da classe ```SpecificationUtils```.
+
 ---
 
 📢 **Dúvidas ou Sugestões?** Entre em contato pelo [victorhleme.dev@gmail.com](mailto:victorhleme.dev@gmail.com).
