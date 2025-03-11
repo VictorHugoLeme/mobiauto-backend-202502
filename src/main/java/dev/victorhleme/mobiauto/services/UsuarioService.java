@@ -9,7 +9,8 @@ import org.springframework.data.domain.Page;
 public interface UsuarioService {
     public Usuario save(UsuarioCreationDto usuarioDto);
 
-    public Page<Usuario> getAll(UsuarioFilter filter);
+    public Page<Usuario> findAll(UsuarioFilter filter);
+
     public Usuario findById(Long id);
 
     public Usuario update(UsuarioDto usuarioDto);

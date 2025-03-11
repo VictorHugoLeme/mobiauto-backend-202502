@@ -9,7 +9,8 @@ import org.springframework.data.domain.Page;
 public interface OportunidadeService {
     public Oportunidade save(OportunidadeCreationDto oportunidadeDto);
 
-    public Page<Oportunidade> getAll(OportunidadeFilter filter);
+    public Page<Oportunidade> findAll(OportunidadeFilter filter);
+
     public Oportunidade findById(Long id);
 
     public Oportunidade update(OportunidadeDto oportunidadeDto);

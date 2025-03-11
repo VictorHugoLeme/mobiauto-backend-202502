@@ -33,7 +33,7 @@ public class RevendaServiceImpl implements RevendaService {
     }
 
     @Override
-    public Page<Revenda> getAll(RevendaFilter filter) {
+    public Page<Revenda> findAll(RevendaFilter filter) {
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
         return revendaRepository.findAll(revendaSpecifications.getSpecification(filter), pageable);
     }

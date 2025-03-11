@@ -34,15 +34,15 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id:[0-9]+}")
-    public ResponseEntity<UsuarioDto> getById(@PathVariable final Long id) {
-        log.debug("Getting usuario by id: {}", id);
+    public ResponseEntity<UsuarioDto> findById(@PathVariable final Long id) {
+        log.debug("Finding usuario by id: {}", id);
         return ResponseEntity.ok(usuarioMapper.from(usuarioService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<UsuarioDto>> findAllPaginated(UsuarioFilter filter) {
-        log.debug("Get usuarios by filter");
-        return ResponseEntity.ok(usuarioService.getAll(filter).map(usuarioMapper::from));
+        log.debug("Finding usuarios by filter");
+        return ResponseEntity.ok(usuarioService.findAll(filter).map(usuarioMapper::from));
     }
 
     @PutMapping("/{id:[0-9]+}")

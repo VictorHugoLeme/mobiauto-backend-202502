@@ -34,15 +34,15 @@ public class RevendaController {
     }
 
     @GetMapping("/{id:[0-9]+}")
-    public ResponseEntity<RevendaDto> getById(@PathVariable final Long id) {
-        log.debug("Getting revenda by id: {}", id);
+    public ResponseEntity<RevendaDto> findById(@PathVariable final Long id) {
+        log.debug("Finding revenda by id: {}", id);
         return ResponseEntity.ok(revendaMapper.from(revendaService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<RevendaDto>> findAllPaginated(RevendaFilter filter) {
-        log.debug("Get revendas by filter");
-        return ResponseEntity.ok(revendaService.getAll(filter).map(revendaMapper::from));
+        log.debug("Finding revendas by filter");
+        return ResponseEntity.ok(revendaService.findAll(filter).map(revendaMapper::from));
     }
 
     @PutMapping("/{id:[0-9]+}")

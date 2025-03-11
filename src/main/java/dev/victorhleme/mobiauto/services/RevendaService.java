@@ -9,7 +9,8 @@ import org.springframework.data.domain.Page;
 public interface RevendaService {
     public Revenda save(RevendaCreationDto revendaDto);
 
-    public Page<Revenda> getAll(RevendaFilter filter);
+    public Page<Revenda> findAll(RevendaFilter filter);
+
     public Revenda findById(Long id);
 
     public Revenda update(RevendaDto revendaDto);

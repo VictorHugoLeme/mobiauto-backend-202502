@@ -35,14 +35,14 @@ public class OportunidadeController {
 
     @GetMapping("/{id:[0-9]+}")
     public ResponseEntity<OportunidadeDto> getById(@PathVariable final Long id) {
-        log.debug("Getting oportunidade by id: {}", id);
+        log.debug("Finding oportunidade by id: {}", id);
         return ResponseEntity.ok(oportunidadeMapper.from(oportunidadeService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<OportunidadeDto>> findAllPaginated(OportunidadeFilter filter) {
-        log.debug("Get oportunidades by filter");
-        return ResponseEntity.ok(oportunidadeService.getAll(filter).map(oportunidadeMapper::from));
+        log.debug("Finding oportunidades by filter");
+        return ResponseEntity.ok(oportunidadeService.findAll(filter).map(oportunidadeMapper::from));
     }
 
     @PutMapping("/{id:[0-9]+}")

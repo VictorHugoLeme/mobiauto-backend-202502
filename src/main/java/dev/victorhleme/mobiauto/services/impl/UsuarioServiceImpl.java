@@ -51,7 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Page<Usuario> getAll(UsuarioFilter filter) {
+    public Page<Usuario> findAll(UsuarioFilter filter) {
         permissionService.checkAuthority("PERM_USUARIO_READ_" + filter.getRevendaId());
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
         return usuarioRepository.findAll(usuarioSpecifications.getSpecification(filter), pageable);

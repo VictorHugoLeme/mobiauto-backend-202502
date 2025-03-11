@@ -39,7 +39,7 @@ public class OportunidadeServiceImpl implements OportunidadeService {
     }
 
     @Override
-    public Page<Oportunidade> getAll(OportunidadeFilter filter) {
+    public Page<Oportunidade> findAll(OportunidadeFilter filter) {
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
         return oportunidadeRepository.findAll(oportunidadeSpecifications.getSpecification(filter), pageable);
     }
