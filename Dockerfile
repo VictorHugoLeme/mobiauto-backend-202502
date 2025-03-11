@@ -5,7 +5,7 @@ FROM amazoncorretto:21 AS build
 WORKDIR /app
 
 # Copy the application JAR (Ensure you run `mvn clean package` before building)
-COPY target/mobiauto-0.0.1-SNAPSHOT.jar app.jar
+COPY target/mobiauto-1.0.0.jar app.jar
 
 # Expose the application port
 EXPOSE 8080

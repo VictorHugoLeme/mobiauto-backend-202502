@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.victorhleme</groupId>
 	<artifactId>mobiauto</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>mobiauto</name>
 	<description>Test project for Mobiauto</description>
 	<url/>
