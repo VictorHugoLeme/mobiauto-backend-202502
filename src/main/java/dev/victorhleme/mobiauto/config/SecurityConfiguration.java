@@ -60,7 +60,9 @@ public class SecurityConfiguration {
         http
             .securityMatcher(
                 "/v1/oportunidade",
+                "/v1/oportunidade/**",
                 "/v1/revenda",
+                "/v1/revenda/**",
                 "/v1/usuario",
                 "/v1/usuario/**"
             )

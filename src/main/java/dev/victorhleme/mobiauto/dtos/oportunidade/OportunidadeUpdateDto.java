@@ -9,7 +9,8 @@ import lombok.With;
 @With
 @AllArgsConstructor
 @NoArgsConstructor
-public class OportunidadeCreationDto {
+public class OportunidadeUpdateDto {
+    private Long id;
     private String clienteNome;
     private String clienteEmail;
     private String clienteTelefone;
@@ -17,5 +18,4 @@ public class OportunidadeCreationDto {
     private String veiculoModelo;
     private String veiculoVersao;
     private String veiculoAno;
-    private Long revendaId;
 }

@@ -1,20 +1,26 @@
 package dev.victorhleme.mobiauto.services;
 
 import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeCreationDto;
-import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeDto;
+import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeFinishDto;
+import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeTransferDto;
+import dev.victorhleme.mobiauto.dtos.oportunidade.OportunidadeUpdateDto;
 import dev.victorhleme.mobiauto.entities.Oportunidade;
 import dev.victorhleme.mobiauto.filters.OportunidadeFilter;
 import org.springframework.data.domain.Page;
 
 public interface OportunidadeService {
-    public Oportunidade save(OportunidadeCreationDto oportunidadeDto);
+    Oportunidade save(OportunidadeCreationDto oportunidadeDto);
 
-    public Page<Oportunidade> findAll(OportunidadeFilter filter);
+    Page<Oportunidade> findAll(OportunidadeFilter filter);
 
-    public Oportunidade findById(Long id);
+    Oportunidade findById(Long id);
 
-    public Oportunidade update(OportunidadeDto oportunidadeDto);
+    Oportunidade transfer(OportunidadeTransferDto transferDto);
 
-    public void delete(Long id);
+    Oportunidade finish(OportunidadeFinishDto finishDto);
+
+    Oportunidade update(OportunidadeUpdateDto oportunidadeDto);
+
+    void delete(Long id);
 
 }

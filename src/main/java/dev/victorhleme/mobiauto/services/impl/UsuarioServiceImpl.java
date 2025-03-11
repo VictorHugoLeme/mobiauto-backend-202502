@@ -21,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static dev.victorhleme.mobiauto.enums.PasswordResetTokenType.FIRST_ACCESS;
 
 @Service
@@ -50,19 +52,25 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Page<Usuario> findAll(UsuarioFilter filter) {
+    public Page<Usuario> findAllPageable(UsuarioFilter filter) {
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
         return usuarioRepository.findAll(usuarioSpecifications.getSpecification(filter), pageable);
     }
 
     @Override
+    public List<Usuario> findAll(UsuarioFilter filter) {
+        return usuarioRepository.findAll(usuarioSpecifications.getSpecification(filter));
+    }
+
+    @Override
     public Usuario findById(Long id) {
-        return findUsuarioOrThrowException(id);
+        return usuarioRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException(Usuario.class, id));
     }
 
     @Override
     public Usuario update(UsuarioDto usuarioDto) {
-        Usuario existing = findUsuarioOrThrowException(usuarioDto.getId());
+        Usuario existing = findById(usuarioDto.getId());
         BeanUtils.copyProperties(usuarioDto, existing);
         return usuarioRepository.save(existing);
     }
@@ -72,13 +80,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    private Usuario findUsuarioOrThrowException(Long id) {
-        return usuarioRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException(Usuario.class, id));
-    }
-
     public Long getRevendaIdFromUser(Long id) {
-        return findUsuarioOrThrowException(id).getRevenda().getId();
+        return findById(id).getRevenda().getId();
     }
 
     private String generatePassword() {

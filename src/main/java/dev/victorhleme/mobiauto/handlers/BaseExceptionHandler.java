@@ -36,7 +36,8 @@ public class BaseExceptionHandler {
     @ExceptionHandler({
         HttpMessageConversionException.class,
         BadRequestException.class,
-        IllegalArgumentException.class
+        IllegalArgumentException.class,
+        IllegalStateException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> badRequest(RuntimeException ex, WebRequest req) {

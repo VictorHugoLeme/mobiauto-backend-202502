@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import java.util.List;
@@ -27,8 +28,10 @@ public class Revenda {
     @Column(name = "nome_social", nullable = false)
     private String nomeSocial;
 
-    @OneToMany(mappedBy = "revenda")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "revenda", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Oportunidade> oportunidades;
+
 
 }

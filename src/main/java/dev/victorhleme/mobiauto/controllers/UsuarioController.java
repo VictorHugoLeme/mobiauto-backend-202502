@@ -47,7 +47,7 @@ public class UsuarioController {
     public ResponseEntity<Page<UsuarioDto>> findAllPaginated(UsuarioFilter filter) {
         log.debug("Finding usuarios by filter");
         permissionService.checkAuthority("PERM_USUARIO_READ_" + filter.getRevendaId());
-        return ResponseEntity.ok(usuarioService.findAll(filter).map(usuarioMapper::from));
+        return ResponseEntity.ok(usuarioService.findAllPageable(filter).map(usuarioMapper::from));
     }
 
     @PutMapping("/{id:[0-9]+}")
@@ -56,7 +56,7 @@ public class UsuarioController {
         @RequestBody UsuarioDto dto
     ) {
         log.debug("Updating usuario with id: {}", id);
-        permissionService.checkAuthority("PERM_USUARIO_MANAGE_" + usuarioService.findById(id).getRevenda().getId());
+        permissionService.checkAuthority("PERM_USUARIO_EDIT_" + usuarioService.findById(id).getRevenda().getId());
         return ResponseEntity.ok(usuarioMapper.from(usuarioService.update(dto)));
     }
 

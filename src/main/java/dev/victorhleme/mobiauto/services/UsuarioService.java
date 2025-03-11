@@ -6,10 +6,14 @@ import dev.victorhleme.mobiauto.entities.Usuario;
 import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface UsuarioService {
     Usuario save(UsuarioCreationDto usuarioDto);
 
-    Page<Usuario> findAll(UsuarioFilter filter);
+    Page<Usuario> findAllPageable(UsuarioFilter filter);
+
+    List<Usuario> findAll(UsuarioFilter filter);
 
     Usuario findById(Long id);
 
