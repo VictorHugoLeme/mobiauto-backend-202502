@@ -6,6 +6,7 @@ import dev.victorhleme.mobiauto.entities.Revenda;
 import dev.victorhleme.mobiauto.filters.RevendaFilter;
 import dev.victorhleme.mobiauto.mappers.RevendaMapper;
 import dev.victorhleme.mobiauto.services.RevendaService;
+import dev.victorhleme.mobiauto.services.impl.PermissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,10 +25,12 @@ public class RevendaController {
 
     private final RevendaService revendaService;
     private final RevendaMapper revendaMapper;
+    private final PermissionService permissionService;
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody RevendaCreationDto revendaDto) {
         log.debug("Creating revenda");
+        permissionService.checkForAdmin();
         Revenda revenda = revendaService.save(revendaDto);
         final URI uri = getUri(revenda.getId());
         return ResponseEntity.created(uri).build();
@@ -36,12 +39,14 @@ public class RevendaController {
     @GetMapping("/{id:[0-9]+}")
     public ResponseEntity<RevendaDto> findById(@PathVariable final Long id) {
         log.debug("Finding revenda by id: {}", id);
+        permissionService.checkForAdmin();
         return ResponseEntity.ok(revendaMapper.from(revendaService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<Page<RevendaDto>> findAllPaginated(RevendaFilter filter) {
         log.debug("Finding revendas by filter");
+        permissionService.checkForAdmin();
         return ResponseEntity.ok(revendaService.findAll(filter).map(revendaMapper::from));
     }
 
@@ -51,12 +56,14 @@ public class RevendaController {
         @RequestBody RevendaDto dto
     ) {
         log.debug("Updating revenda with id: {}", id);
+        permissionService.checkForAdmin();
         return ResponseEntity.ok(revendaMapper.from(revendaService.update(dto)));
     }
 
     @DeleteMapping("/{id:[0-9]+}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         log.debug("Deleting revenda with id: {}", id);
+        permissionService.checkForAdmin();
         revendaService.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -13,7 +13,6 @@ import lombok.With;
 public class UsuarioCreationDto {
     private String nome;
     private String email;
-    private String senha;
     private Long revendaId;
     private Cargo cargo;
 }

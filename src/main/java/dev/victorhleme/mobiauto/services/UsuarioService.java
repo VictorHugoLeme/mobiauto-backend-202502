@@ -7,14 +7,16 @@ import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import org.springframework.data.domain.Page;
 
 public interface UsuarioService {
-    public Usuario save(UsuarioCreationDto usuarioDto);
+    Usuario save(UsuarioCreationDto usuarioDto);
 
-    public Page<Usuario> findAll(UsuarioFilter filter);
+    Page<Usuario> findAll(UsuarioFilter filter);
 
-    public Usuario findById(Long id);
+    Usuario findById(Long id);
 
-    public Usuario update(UsuarioDto usuarioDto);
+    Usuario update(UsuarioDto usuarioDto);
 
-    public void delete(Long id);
+    void delete(Long id);
+
+    Long getRevendaIdFromUser(Long id);
 
 }

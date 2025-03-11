@@ -10,9 +10,14 @@ import org.springframework.stereotype.Service;
 public class PermissionService {
 
     public void checkAuthority(String authority) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = getAuthentication();
         if (isAdmin(authentication)) return;
         if (hasAuthority(authentication, authority)) return;
+        throw new ForbiddenException();
+    }
+
+    public void checkForAdmin() {
+        if (isAdmin(getAuthentication())) return;
         throw new ForbiddenException();
     }
 
@@ -26,5 +31,9 @@ public class PermissionService {
         return authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .anyMatch(auth -> auth.equals(authority));
+    }
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

@@ -8,6 +8,7 @@ import dev.victorhleme.mobiauto.filters.UsuarioFilter;
 import dev.victorhleme.mobiauto.mappers.UsuarioMapper;
 import dev.victorhleme.mobiauto.repositories.UsuarioRepository;
 import dev.victorhleme.mobiauto.repositories.specifications.UsuarioSpecifications;
+import dev.victorhleme.mobiauto.security.PasswordGenerator;
 import dev.victorhleme.mobiauto.services.EmailService;
 import dev.victorhleme.mobiauto.services.RevendaService;
 import dev.victorhleme.mobiauto.services.UsuarioService;
@@ -33,14 +34,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final RevendaService revendaService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
-    private final PermissionService permissionService;
 
     @Override
     public Usuario save(UsuarioCreationDto usuarioDto) {
-        permissionService.checkAuthority("PERM_USUARIO_CREATE_" + usuarioDto.getRevendaId());
         Usuario newUsuario = usuarioMapper.from(usuarioDto);
 
-        newUsuario.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
+        newUsuario.setSenha(passwordEncoder.encode(generatePassword()));
 
         if (usuarioDto.getRevendaId() != null)
             newUsuario.setRevenda(revendaService.findById(usuarioDto.getRevendaId()));
@@ -52,28 +51,24 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Page<Usuario> findAll(UsuarioFilter filter) {
-        permissionService.checkAuthority("PERM_USUARIO_READ_" + filter.getRevendaId());
         Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize());
         return usuarioRepository.findAll(usuarioSpecifications.getSpecification(filter), pageable);
     }
 
     @Override
     public Usuario findById(Long id) {
-        permissionService.checkAuthority("PERM_USUARIO_READ_" + getRevendaIdFromUser(id));
         return findUsuarioOrThrowException(id);
     }
 
     @Override
     public Usuario update(UsuarioDto usuarioDto) {
         Usuario existing = findUsuarioOrThrowException(usuarioDto.getId());
-        permissionService.checkAuthority("PERM_USUARIO_MANAGE_" + existing.getRevenda().getId());
         BeanUtils.copyProperties(usuarioDto, existing);
         return usuarioRepository.save(existing);
     }
 
     @Override
     public void delete(Long id) {
-        permissionService.checkAuthority("PERM_USUARIO_MANAGE_" + getRevendaIdFromUser(id));
         usuarioRepository.deleteById(id);
     }
 
@@ -82,7 +77,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             .orElseThrow(() -> new NotFoundException(Usuario.class, id));
     }
 
-    private Long getRevendaIdFromUser(Long id) {
+    public Long getRevendaIdFromUser(Long id) {
         return findUsuarioOrThrowException(id).getRevenda().getId();
+    }
+
+    private String generatePassword() {
+        PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
+            .useDigits(true).useSpecialCharacter(true)
+            .useLower(true).useUpper(true).build();
+        return passwordGenerator.generate(12);
     }
 }

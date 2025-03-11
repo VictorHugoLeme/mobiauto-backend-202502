@@ -5,6 +5,7 @@ import dev.victorhleme.mobiauto.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -61,10 +62,12 @@ public class SecurityConfiguration {
                 "/v1/oportunidade",
                 "/v1/revenda",
                 "/v1/usuario",
-                "/v1/usuario"
+                "/v1/usuario/**"
             )
             .addFilterBefore(new JwtSecurityFilter(tokenService, userDetailsService), UsernamePasswordAuthenticationFilter.class)
-            .authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
+            .authorizeHttpRequests(requests -> requests
+                .requestMatchers(HttpMethod.POST, "/v1/oportunidade").permitAll()
+                .anyRequest().authenticated());
         return http.build();
     }
 
