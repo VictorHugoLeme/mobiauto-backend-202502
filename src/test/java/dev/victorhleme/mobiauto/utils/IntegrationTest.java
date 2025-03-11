@@ -1,17 +1,37 @@
 package dev.victorhleme.mobiauto.utils;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
-@SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
-@ActiveProfiles("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Slf4j
-public class IntegrationTest {
+@Testcontainers
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public abstract class IntegrationTest {
+
+
+    private static final String POSTGRES_IMAGE = "postgres:latest";
+    private static final String POSTGRES_DB = "mobiauto-test";
+    private static final String POSTGRES_USER = "postgres";
+    private static final String POSTGRES_PASSWORD = "postgrespass";
+
+    @Container
+    static PostgreSQLContainer postgres = new PostgreSQLContainer<>(DockerImageName.parse(POSTGRES_IMAGE))
+        .withDatabaseName(POSTGRES_DB)
+        .withUsername(POSTGRES_USER)
+        .withPassword(POSTGRES_PASSWORD)
+        .withExposedPorts(5432);
+
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+
+    }
+
+
 }
