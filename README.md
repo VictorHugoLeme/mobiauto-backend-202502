@@ -20,6 +20,14 @@ O **Mobiauto** é um aplicativo projetado para facilitar a compra e venda de ve�
 - **ParameterizedTest** para rápida implementação de casos de uso
 - Listagens com filtro e paginação.
 
+### 🏗 Arquitetura do Backend
+A arquitetura do backend segue o padrão de Arquitetura em Camadas (Layered Architecture), garantindo separação de responsabilidades e organização do código. Ela é composta pelos seguintes componentes:
+
+1. Model – Representa os dados da aplicação.
+2. Repository – Responsável pela persistência e recuperação de dados do banco.
+3. Service – Contém a lógica da aplicação e intermedia a comunicação entre Repositories e Controllers.
+4. Controller – Expõe as APIs REST e recebe as requisições do frontend ou de clientes externos.
+
 ## 🛠️ Configuração e Instalação
 
 ### 🎯 Requisitos
@@ -168,6 +176,13 @@ private Long revendaId;
 - Se estiver utilizando a Collection do Postman fornecida, os parâmetros já estarão presentes, faltando apenas preenchimento.
 
 - Campos como *clienteNome* contam com especificação branda, utilizando o método ```fieldLike``` da classe ```SpecificationUtils```.
+
+---
+
+## 🕵️ Testes
+- A Cobertura de testes está muito abaixo do ideal. Devido ao tempo que havia disponível para trabalhar neste teste, apliquei um teste parametrizado a apenas ao método de criação de Revendas.
+- Acredito que as partes mais críticas e que eu gostaria de ter tido mais tempo para testar consiste na autorização e na distribuição de oportunidades.
+Porém, são features que foram testadas manualmente durante seus desenvolvimentos.
 
 ---
 

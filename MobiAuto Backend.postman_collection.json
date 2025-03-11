@@ -1,0 +1,741 @@
+{
+	"info": {
+		"_postman_id": "837f9f41-7f81-4c81-b910-5a94f402988b",
+		"name": "MobiAuto Backend",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19320299"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json();",
+									"pm.environment.set(\"bearer-token\", responseData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"user1@example.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Recover Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user1@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/auth/recover-password"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"c8b8cc67be58b55cace4d5a3346719d4\",\n    \"newPassword\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/auth/reset-password"
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user1@example.com\",\n    \"newPassword\": \"newPassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/auth/change-password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Create Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"assis1_rev1\",\n\t\"email\": \"assis1_rev1@example.com\",\n    \"cargo\": \"ASSISTENTE\",\n    \"revendaId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/usuario",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"usuario"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "revendaId",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "cargo",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find User By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/v1/usuario/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/usuario/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/usuario/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Revenda",
+			"item": [
+				{
+					"name": "Create Revenda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cnpj\": \"36037402000108\",\n\t\"nomeSocial\": \"nome social 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/revenda"
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Revendas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/revenda",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"revenda"
+							],
+							"query": [
+								{
+									"key": "cnpj",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "nomeSocial",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Revenda By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/v1/revenda/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Revenda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/revenda/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Revenda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/revenda/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Oportunidade",
+			"item": [
+				{
+					"name": "Create Oportunidade",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clienteNome\": \"Cliente 1\",\n    \"clienteEmail\": \"cliente1@example.com\",\n    \"clienteTelefone\": \"xx 1234 5678\",\n    \"veiculoMarca\": \"Chevrolet\",\n    \"veiculoModelo\": \"Cobalt\",\n    \"veiculoVersao\": \"LT\",\n    \"veiculoAno\": \"2015\",\n    \"revendaId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/oportunidade"
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Oportunidade",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/oportunidade",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"oportunidade"
+							],
+							"query": [
+								{
+									"key": "clienteNome",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "clienteEmail",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "clienteTelefone",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "veiculoMarca",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "veiculoModelo",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "veiculoVersao",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "veiculoAno",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "responsavelId",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "conclusaoBefore",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "conclusaoAfter",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "atribuicaoBefore",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "atribuicaoAfter",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "revendaId",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Oportunidade By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/v1/oportunidade/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Oportunidade",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 6,\n    \"clienteNome\": \"Cliente 6\",\n    \"clienteEmail\": \"cliente1@example.com\",\n    \"clienteTelefone\": \"xx 1234 5678\",\n    \"veiculoMarca\": \"Chevrolet\",\n    \"veiculoModelo\": \"Cobalt\",\n    \"veiculoVersao\": \"LT\",\n    \"veiculoAno\": \"2015\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/oportunidade/6"
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer Oportunidade",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 1,\n    \"newResponsavelId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/oportunidade/transfer/"
+					},
+					"response": []
+				},
+				{
+					"name": "Finish Oportunidade",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 1,\n    \"motivoConclusao\": \"Because\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/oportunidade/finish/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Oportunidade",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/v1/oportunidade/"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{bearer-token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
