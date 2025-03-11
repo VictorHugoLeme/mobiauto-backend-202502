@@ -47,6 +47,10 @@ $ docker compose up -d --build
 
 ## 🖱️ Utilização
 
+> [!TIP]  
+> Esta aplicação conta também com Swagger, podendo ser acessado por aqui:
+> http://localhost:8080/swagger-ui/index.html
+
 ### 🐣Primeiro contato
 - A aplicação sobe com um usuário padrão com o cargo ```ADMINISTRADOR``` criado.
 - Você pode cadastrar uma nova senha realizando uma requisição ```POST``` para o endpoint ```/v1/auth/recover-password```, contendo o seguinte body:
@@ -180,8 +184,8 @@ private Long revendaId;
 ---
 
 ## 🕵️ Testes
-- A Cobertura de testes está muito abaixo do ideal. Devido ao tempo que havia disponível para trabalhar neste teste, apliquei um teste parametrizado a apenas ao método de criação de Revendas.
-- Acredito que as partes mais críticas e que eu gostaria de ter tido mais tempo para testar consiste na autorização e na distribuição de oportunidades.
+- A Cobertura de testes está muito abaixo do ideal. Devido ao tempo que eu havia disponível para trabalhar neste projeto, apliquei um teste parametrizado a apenas o método de criação de Revendas.
+- Acredito que as partes mais críticas e que eu gostaria de ter tido mais tempo para testar consistem na autorização e na distribuição de oportunidades.
 Porém, são features que foram testadas manualmente durante seus desenvolvimentos.
 
 ---
